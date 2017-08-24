@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="styles.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script>
+        $(document).ready(function(){
+
+            $("form").submit(function(){
+                var location = $("#location").val();
+                var url = "http://api.openweathermap.org/data/2.5/weather?q=";
+                url += location
+                url += "&appid=3c0ce8c64a863d6cf11d1c5b95666c7e";
+                console.log(url);
+
+                $.get(url, function(res){
+                    console.log(res);
+                    var degreesF = 9/5*(res.main.temp-273)+32;
+                    console.log(res.main.temp);
+                    $("#weather").html("<h1>" + location + "</h1>");
+                    $("#weather").append("<p>Temperature: " + Math.round(degreesF) + "&#8457;</p>");
+
+                }, "json");
+
+                return false;
+            });
+
+        });
+        </script>
+        <title>Weather App</title>
+    </head>
+    <body>
+        <form>
+            <h2>Enter Location</h2>
+            <input id="location" type="text" value="Chicago">
+            <input type="submit">
+        </form>
+        <div id="weather">
+        </div>
+    </body>
+</html>
